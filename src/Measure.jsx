@@ -2,6 +2,7 @@ import React, { Component, Children, PropTypes, createElement, cloneElement } fr
 import ReactDOM from 'react-dom'
 import resizeDetector from './resize-detector'
 import getNodeDimensions from './get-node-dimensions'
+import throttle from 'lodash.throttle'
 
 class Measure extends Component {
   static propTypes = {
@@ -36,6 +37,7 @@ class Measure extends Component {
 
     // add component to resize detector to detect changes on resize
     resizeDetector().listenTo(this._node, () => this.measure())
+    if (typeof 'window' !== undefined) window.addEventListener('resize', this.onWindowResize)
   }
 
   componentWillReceiveProps({config, whitelist, blacklist}) {
@@ -49,6 +51,7 @@ class Measure extends Component {
 
   componentWillUnmount() {
     resizeDetector().removeAllListeners(this._node)
+    if (typeof 'window' !== undefined) window.removeEventListener('resize', this.onWindowResize)
   }
 
   getDimensions(node = this._node, accurate = true) {
@@ -84,7 +87,9 @@ class Measure extends Component {
         return true
       }
     })
-  }
+  };
+
+  onWindowResize = throttle(this.measure, 1000);
 
   render() {
     const { children } = this.props

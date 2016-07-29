@@ -1,6 +1,6 @@
 {
   "name": "react-measure",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Compute measurements of React components.",
   "main": "lib/react-measure.js",
   "scripts": {
@@ -37,7 +37,8 @@
     "react-dom": ">0.13.0"
   },
   "dependencies": {
-    "element-resize-detector": "^1.1.5"
+    "element-resize-detector": "^1.1.5",
+    "lodash.throttle": "^4.1.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^2.0.0",
